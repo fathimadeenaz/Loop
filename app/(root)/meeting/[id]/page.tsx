@@ -16,6 +16,7 @@ const Meeting = () => {
     const { user, isLoaded } = useUser();
     const { call, isCallLoading } = useGetCallById(id || "");
     const [isSetupComplete, setIsSetupComplete] = useState(false);
+    const [isMicCamEnabled, setIsMicCamEnabled] = useState(false);
 
     if (!isLoaded || isCallLoading) return <Loader />;
 
@@ -34,9 +35,12 @@ const Meeting = () => {
             <StreamCall call={call}>
                 <StreamTheme>
                     {!isSetupComplete ? (
-                        <MeetingSetup setIsSetupComplete={setIsSetupComplete} />
+                        <MeetingSetup
+                            setIsSetupComplete={setIsSetupComplete}
+                            setIsMicCamEnabled={setIsMicCamEnabled} // Pass down state setter
+                        />
                     ) : (
-                        <MeetingRoom />
+                        <MeetingRoom isMicCamEnabled={isMicCamEnabled} /> // Pass down state to MeetingRoom
                     )}
                 </StreamTheme>
             </StreamCall>

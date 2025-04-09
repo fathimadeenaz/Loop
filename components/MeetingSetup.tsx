@@ -15,8 +15,10 @@ import { Button } from "./ui/button";
 
 const MeetingSetup = ({
     setIsSetupComplete,
+    setIsMicCamEnabled,
 }: {
     setIsSetupComplete: (value: boolean) => void;
+    setIsMicCamEnabled: (value: boolean) => void; // Add this prop
 }) => {
     const { useCallEndedAt, useCallStartsAt } = useCallStateHooks();
     const callStartsAt = useCallStartsAt();
@@ -38,6 +40,7 @@ const MeetingSetup = ({
 
     const [isMicCamToggled, setIsMicCamToggled] = useState(false);
 
+    // Set mic/cam state on change
     useEffect(() => {
         if (isMicCamToggled) {
             call.camera.disable();
@@ -46,7 +49,15 @@ const MeetingSetup = ({
             call.camera.enable();
             call.microphone.enable();
         }
-    }, [isMicCamToggled, call.camera, call.microphone]);
+        setIsMicCamEnabled(!isMicCamToggled); // Reflect the state change globally
+    }, [isMicCamToggled, call.camera, call.microphone, setIsMicCamEnabled]);
+
+    useEffect(() => {
+        return () => {
+            call.camera.disable();
+            call.microphone.disable();
+        };
+    }, [call.camera, call.microphone]);
 
     if (callTimeNotArrived)
         return (

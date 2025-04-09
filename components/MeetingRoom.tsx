@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useCall } from "@stream-io/video-react-sdk";
 
+import Loader from "./Loader";
 import { cn } from "@/lib/utils";
 import { Users, LayoutList } from "lucide-react";
 import {
@@ -14,9 +16,6 @@ import {
     SpeakerLayout,
     useCallStateHooks,
 } from "@stream-io/video-react-sdk";
-
-
-import Loader from "./Loader";
 import EndCallButton from "./EndCallButton";
 import {
     DropdownMenu,
@@ -28,15 +27,36 @@ import {
 
 type CallLayoutType = "grid" | "speaker-left" | "speaker-right";
 
-const MeetingRoom = () => {
+const MeetingRoom = ({ isMicCamEnabled }: { isMicCamEnabled: boolean }) => {
     const searchParams = useSearchParams();
     const isPersonalRoom = !!searchParams.get("personal");
     const router = useRouter();
     const [layout, setLayout] = useState<CallLayoutType>("speaker-left");
     const [showParticipants, setShowParticipants] = useState(false);
-    const { useCallCallingState } = useCallStateHooks();
 
+    const call = useCall();
+    const { useCallCallingState } = useCallStateHooks();
     const callingState = useCallCallingState();
+
+    useEffect(() => {
+        if (callingState === CallingState.JOINED) {
+            if (call) {
+                if (isMicCamEnabled) {
+                    call.camera.enable();
+                    call.microphone.enable();
+                } else {
+                    call.camera.disable();
+                    call.microphone.disable();
+                }
+
+                return () => {
+                    call.camera.disable();
+                    call.microphone.disable();
+                    call.leave();
+                };
+            }
+        }
+    }, [callingState, call, isMicCamEnabled]);
 
     if (callingState !== CallingState.JOINED) return <Loader />;
 
