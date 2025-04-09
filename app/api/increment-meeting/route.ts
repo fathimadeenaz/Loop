@@ -10,7 +10,7 @@ export async function POST() {
     const user = await (await clerkClient())?.users?.getUser(userId);
     const currentCount = Number(user.publicMetadata.meetingCount) || 0;
 
-    if (currentCount >= 5) {
+    if (currentCount >= 10) {
         return new Response(JSON.stringify({ allowed: false }), { status: 200 });
     }
 

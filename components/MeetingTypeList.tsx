@@ -36,12 +36,16 @@ const MeetingTypeList = () => {
 
         if (!client || !user) return;
 
-        const res = await fetch("/api/increment-meeting", { method: "POST" });
-        const data = await res.json();
+        const isDemoUser = user?.username === "vifefo4696" || user?.username === "cacis78559";
 
-        if (!data.allowed) {
-            toast("Meeting limit reached. Create an account with us to unlock all our features.");
-            return;
+        if (isDemoUser) {
+            const res = await fetch("/api/increment-meeting", { method: "POST" });
+            const data = await res.json();
+
+            if (!data.allowed) {
+                toast("Meeting limit reached. Create an account with us to unlock all our features.");
+                return;
+            }
         }
 
         if (meetingState === "isScheduleMeeting" && !values.description.trim()) {
