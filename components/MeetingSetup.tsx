@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { useUser } from "@clerk/nextjs";
 import {
     DeviceSettings,
     VideoPreview,
@@ -20,11 +21,14 @@ const MeetingSetup = ({
     const { useCallEndedAt, useCallStartsAt } = useCallStateHooks();
     const callStartsAt = useCallStartsAt();
     const callEndedAt = useCallEndedAt();
-    const callTimeNotArrived =
-        callStartsAt && new Date(callStartsAt) > new Date();
-    const callHasEnded = !!callEndedAt;
 
+    const { user } = useUser();
     const call = useCall();
+
+    const isHost = user?.id === call?.state?.createdBy?.id;
+    const callTimeNotArrived = callStartsAt && new Date(callStartsAt) > new Date() && !isHost;
+
+    const callHasEnded = !!callEndedAt;
 
     if (!call) {
         throw new Error(
