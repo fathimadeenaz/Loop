@@ -1,0 +1,247 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-dark-1: #1c1f2e;
+  --color-dark-2: #161925;
+  --color-dark-3: #252a41;
+  --color-dark-4: #1e2757;
+
+  --color-blue-1: #0e78f9;
+
+  --color-sky-1: #c9ddff;
+  --color-sky-2: #ecf0ff;
+  --color-sky-3: #f5fcff;
+
+  --color-orange-1: #ff742e;
+
+  --color-purple-1: #830ef9;
+
+  --color-yellow-1: #f9a90e;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --background-image-hero: url("/images/hero-background.png");
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
+
+@utility flex-between {
+  @apply flex justify-between items-center;
+}
+
+@utility h2 {
+  @apply text-[24px] leading-[36px] font-bold;
+}
+
+@utility h4 {
+  @apply text-[18px] leading-[20px] font-medium;
+}
+
+@utility subtitle-2 {
+  @apply text-[14px] leading-[20px] font-semibold;
+}
+
+@utility close-button {
+  @apply absolute -right-1 -top-7 cursor-pointer sm:-right-2 sm:-top-4;
+}
+
+/* ============== shad class overrides ================= */
+
+@utility shad-alert-dialog {
+  @apply space-y-4! max-w-[95%]! sm:w-fit! rounded-xl! px-4! md:px-8! py-10! bg-dark-2! text-white! outline-hidden! border-none!;
+}
+
+
+
+@layer utilities {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* ======== stream css overrides ======== */
+  .str-video__call-stats {
+    max-width: 500px;
+    position: relative;
+  }
+
+  .str-video__speaker-layout__wrapper {
+    max-height: 700px;
+  }
+
+  .str-video__participant-details {
+    color: white;
+  }
+
+  .str-video__menu-container {
+    color: white;
+  }
+
+  .str-video__notification {
+    color: white;
+  }
+
+  .str-video__participant-list {
+    background-color: #1c1f2e;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    height: 100%;
+  }
+
+  .str-video__call-controls__button {
+    height: 40px;
+  }
+
+  .str-video__composite-button__button-group.str-video__composite-button__button-group--active-secondary,
+  .str-video__composite-button__button-group.str-video__composite-button__button-group--active-secondary .str-video__menu-toggle-button,
+  .str-video__call-controls__button--variant-danger {
+    background-color: oklch(63.7% 0.237 25.331) !important;
+  }
+
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .glassmorphism2 {
+    background: rgba(18, 17, 17, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+
+  /* ==== clerk class override ===== */
+
+  .cl-providerIcon__github {
+    filter: invert(1);
+  }
+
+  .cl-userButtonAvatarBox {
+    width: 42px !important;
+    height: 42px !important;
+    border: 1px solid #fff !important;
+  }
+
+  .cl-userButtonPopoverActionButtonIcon, .cl-internal-1i0v6m5 {
+    color: white !important;
+  }
+
+  .cl-logoBox {
+    height: 40px;
+  }
+  .cl-dividerLine {
+    background: #252a41;
+    height: 2px;
+  }
+
+  .cl-socialButtonsIconButton {
+    border: 3px solid #565761;
+  }
+
+  .cl-internal-wkkub3, .cl-userButtonPopoverActionButton {
+    color: white;
+  }
+
+  .cl-avatarImageActionsRemove, .cl-button__danger {
+    border: 1px solid rgba(239, 68, 68, 0.7) !important;
+  }
+
+  .cl-button__profile, .cl-button__username, .cl-formButtonReset, .cl-button__password {
+    border: 1px solid rgba(16, 125, 249, 0.7) !important;
+  }
+
+  .cl-userPreviewAvatarBox {
+    border: 1px solid #fff !important;
+  }
+
+  .demo-button {
+    position:absolute;
+    top: 9px;
+    right: 9px;
+    box-shadow: rgb(11, 122, 249) 0px 0px 0px 1px, rgba(255, 255, 255, 0.07) 0px 1px 1px 0px inset, rgba(34, 42, 53, 0.2) 0px 2px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 1px 0px;
+    border-width: 0px;
+    padding: 0.375rem 0.75rem;
+    outline: 0px;
+    user-select: none;
+    cursor: pointer;
+    background-color: hsla(212, 95%, 51%, 1);
+    color: hsla(0, 0%, 0%, 1);
+    border-radius: 0.375rem;
+    font-family: inherit;
+    letter-spacing: normal;
+    font-weight: 500;
+    font-size: 0.8125rem;
+  }
+
+  .demo-button:hover {
+    background-color: hsla(212, 95%, 61%, 1);
+  }
+
+}
+
+/* animation */
+
+.show-block {
+  width: 100%;
+  max-width: 350px;
+  display: block;
+  animation: show 0.7s forwards linear;
+}
+
+@keyframes show {
+  0% {
+    animation-timing-function: ease-in;
+    width: 0%;
+  }
+
+  100% {
+    animation-timing-function: ease-in;
+    width: 100%;
+  }
+}
